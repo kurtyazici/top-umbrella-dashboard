@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Umbrella Content</title>
+<style>
+  :root{
+    --teal:#0e7c7b; --bg:#f7f9fa; --card:#ffffff; --text:#25333f; --muted:#7a8a96;
+    --line:#e5ebee; --heading:#17324d;
+  }
+  html[data-theme="dark"]{
+    --teal:#45c9c6; --bg:#0f1620; --card:#1a2330; --text:#e8eef4; --muted:#9fb0be;
+    --line:#2a3545; --heading:#f2f6fa;
+  }
+  #mode{position:fixed;top:12px;right:12px;z-index:50;width:34px;height:34px;border-radius:50%;
+    border:1px solid rgba(127,127,127,.4);background:var(--card);cursor:pointer;font-size:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);line-height:1}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+  .wrap{max-width:980px;margin:0 auto;padding:24px 20px 50px}
+  .kicker{text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--muted)}
+  .bar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  h1{font-size:26px;font-weight:800;color:var(--heading);margin-top:2px}
+  .subline{font-size:12px;color:var(--muted);margin-top:2px}
+  .spacer{flex:1}
+  .toggle{display:inline-flex;flex-wrap:wrap;max-width:100%;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+  .toggle button{border:0;background:transparent;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .toggle button.on{background:#0e7c7b;color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.bar{align-items:flex-start}.toggle{width:100%;justify-content:center;border-radius:14px}.toggle button{padding:6px 10px;font-size:12px;flex:1 1 auto}}
+  @media(max-width:420px){.grid{grid-template-columns:1fr}}
+  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--text);transition:transform .12s}
+  a.card:hover{transform:translateY(-2px)}
+  .thumb{position:relative;aspect-ratio:3/4;background:linear-gradient(135deg,#17324d,#0e7c7b);display:flex;align-items:center;justify-content:center}
+  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .thumb .ph{color:#fff;opacity:.5;font-size:30px}
+  .thumb .rank{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;z-index:2}
+  .thumb .ptag{position:absolute;bottom:8px;left:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;font-weight:600;border-radius:6px;padding:2px 7px;z-index:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cardbody{padding:8px 10px}
+  .nums{display:flex;justify-content:space-between;align-items:baseline}
+  .rev{font-size:15px;font-weight:800;color:var(--teal)}
+  .views{font-size:12px;color:var(--muted)}
+  .who{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:30px 0}
+  .foot{font-size:11px;color:var(--muted);margin-top:14px}
+  .ig-card .rev{color:#d62976}
+  .ig-card .thumb{overflow:hidden}
+  .ig-card .thumb img{display:block}
+
+</style>
+</head>
+<body>
+<button id="mode" title="Toggle light/dark mode">🌙</button>
+<div class="wrap">
+  <div class="bar">
+    <div>
+      <div class="kicker">Kalo Data Brief · Updated October 2, 2026</div>
+      <h1>Top Umbrella Content</h1>
+      <div class="subline">Top umbrella products from exact “umbrella” search · videos over $100 revenue · <span id="count"></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="toggle">
+      <button id="b1" onclick="setRange(1)">Yesterday</button>
+      <button id="b7" onclick="setRange(7)">7 Days</button>
+      <button id="b30" class="on" onclick="setRange(30)">30 Days</button>
+      <button id="big" onclick="setInstagram()">Instagram</button>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="foot" id="foot">Source: Kalodata · TikTok Shop US · Tap a video to watch on TikTok · Revenue/views are per selected window</div>
+</div>
+
+<script>
+const D = window.__D = [["7672502754870414606","Green Auto Umbrella","08/10/26",64630.0,"3.98m",3400.0,"204.13k",378.0,"23.73k"],["7665070724096314654","Umbrella + Stand","07/21/26",23640.0,"517.61k",384.0,"8.88k",0,""],["7674418581265763615","Auto Loop Umbrella","08/15/26",19650.0,"2.52m",2720.0,"625.4k",252.0,"58.44k"],["7679084369348152589","Auto Loop Umbrella","08/28/26",19170.0,"3.37m",7580.0,"1.79m",846.0,"195.61k"],["7679818417288793375","Auto Loop Umbrella","08/30/26",17400.0,"2.1m",648.0,"131.64k",0,""],["7683233743737310494","Auto Loop Umbrella","09/08/26",14110.0,"2.25m",1860.0,"424.19k",153.0,"35.17k"],["7663493420534598925","Auto Loop Umbrella","07/17/26",13900.0,"1.88m",2410.0,"548.09k",207.0,"48.17k"],["7684632656734178573","Auto Loop Umbrella","09/12/26",13600.0,"1.66m",558.0,"126.57k",0,""],["7682534790104354078","Auto Loop Umbrella","09/06/26",13120.0,"2.62m",0,"",0,""],["7647406158415793438","Umbrella + Stand","06/04/26",11770.0,"244.61k",624.0,"12.7k",0,""],["7677975525930896654","Auto Loop Umbrella","08/25/26",11540.0,"1.52m",0,"",0,""],["7670693266576215326","Car Cooling Umbrella","08/05/26",10410.0,"1.1m",1480.0,"63.2k",104.0,"1.82k"],["7683577311911824654","Auto Loop Umbrella","09/09/26",10280.0,"2.15m",6510.0,"1.67m",351.0,"81.3k"],["7655005408557419807","Car Sunshade","06/24/26",9050.0,"2.19m",152.0,"22.93k",0,""],["7676598258029972767","Auto Loop Umbrella","08/21/26",8690.0,"1.07m",864.0,"199.28k",108.0,"24.67k"],["7679488514618182943","Offset Cross-Base","08/29/26",8620.0,"464.39k",164.0,"7.34k",0,""],["7647421237957758239","Umbrella + Stand","06/04/26",7250.0,"160.78k",960.0,"19.81k",0,""],["7654473213136686349","Summervibes 15FT","06/23/26",7130.0,"57.38k",1320.0,"11.07k",125.88,"1.2k"],["7655936627566595342","PHIVILLA 15FT","06/27/26",7080.0,"219.46k",387.0,"20.82k",139.0,"3.42k"],["7652202392020126989","Summervibes 15FT","06/16/26",6150.0,"47.68k",818.22,"6.62k",0,""],["7678025046803238175","Car Sunshade","08/25/26",5500.0,"2.14m",0,"",0,""],["7654142617210408205","Summervibes 15FT","06/22/26",4910.0,"37.12k",629.4,"5.04k",0,""],["7654690079834672414","Umbrella + Stand","06/23/26",4890.0,"137.58k",192.0,"3.91k",0,""],["7651722445107252510","Car Sunshade","06/15/26",4790.0,"1.03m",1050.0,"176.19k",168.0,"26.96k"],["7658022787566538015","Car Sunshade","07/02/26",4030.0,"1.04m",312.0,"54.35k",0,""],["7687228293581442317","Green Auto Umbrella","09/19/26",3820.0,"304.95k",714.0,"60.4k",0,""],["7679544369732455710","Car Cooling Umbrella","08/29/26",3380.0,"328.16k",0,"",0,""],["7659114695584140557","PHIVILLA 15FT","07/05/26",3280.0,"79.03k",263.0,"12.57k",139.0,"2.1k"],["7615034359288139022","PHIVILLA 15FT","03/08/26",2610.0,"51.16k",0,"",0,""],["7668094171487472909","Green Auto Umbrella","07/29/26",2540.0,"156.03k",518.0,"36.78k",0,""],["7657870982580931853","Summervibes 15FT","07/02/26",2540.0,"17.53k",188.82,"1.32k",0,""],["7645838421985889566","PHIVILLA 15FT","05/30/26",2090.0,"53.53k",0,"",0,""],["7659518234588237087","Car Sunshade","07/06/26",1910.0,"499.99k",104.0,"16.98k",0,""],["7658057945174854942","Car Sunshade","07/02/26",1860.0,"443.78k",312.0,"53.82k",0,""],["7657737857653558559","Car Cooling Umbrella","07/02/26",1800.0,"348.42k",0,"",0,""],["7669823054800850190","Green Auto Umbrella","08/03/26",1610.0,"91.65k",0,"",0,""],["7641779783948389662","Umbrella + Stand","05/19/26",1580.0,"55.02k",432.0,"9.33k",0,""],["7651695148589419807","Car Sunshade","06/15/26",1580.0,"350.2k",232.0,"37.42k",0,""],["7681880125847211278","Car Sunshade","09/04/26",1570.0,"419.59k",160.0,"26.08k",0,""],["7680540180461243678","Green Auto Umbrella","09/01/26",1540.0,"164.75k",1430.0,"158.58k",0,""],["7679454014408264990","Offset Cross-Base","08/29/26",1530.0,"67.23k",0,"",0,""],["7677199876249226526","Offset Cross-Base","08/23/26",1420.0,"47.4k",0,"",0,""],["7652101003919035678","Car Sunshade","06/16/26",1380.0,"301.07k",200.0,"34.77k",0,""],["7657367623214042381","Pocket Travel Umbrella","06/30/26",1340.0,"3.3k",184.0,"564",0,""],["7677377720061332766","Offset Cross-Base","08/23/26",1330.0,"38.22k",0,"",0,""],["7690325476866411789","Umbrella + Stand","09/27/26",1300.0,"51.61k",1300.0,"51.61k",0,""],["7667025730479377694","Car Cooling Umbrella","07/26/26",1280.0,"91.45k",117.0,"4.09k",0,""],["7655796695812377886","Car Cooling Umbrella","06/26/26",1270.0,"78.24k",351.0,"12.07k",104.0,"1.64k"],["7659566008113417486","Car Sunshade","07/06/26",1260.0,"279.71k",192.0,"33.55k",0,""],["7670187695355727117","Green Auto Umbrella","08/04/26",1260.0,"68.83k",0,"",0,""],["7675753230768377101","Green Auto Umbrella","08/19/26",1250.0,"201.74k",1120.0,"193.94k",210.0,"13.41k"],["7651935739038502158","Summervibes 15FT","06/16/26",1240.0,"10.18k",0,"",0,""],["7669989197737987359","Car Cooling Umbrella","08/03/26",1220.0,"81.03k",208.0,"6.99k",0,""],["7688293283449146655","Umbrella + Stand","09/22/26",1200.0,"32.4k",480.0,"10.63k",0,""],["7674023301177560350","Car Cooling Umbrella","08/14/26",1180.0,"98.58k",0,"",0,""],["7684615175835536671","Umbrella + Stand","09/12/26",987.89,"16.39k",0,"",0,""],["7688047097605655821","Green Auto Umbrella","09/21/26",980.0,"68k",616.0,"40.66k",0,""],["7658168349733539102","Car Cooling Umbrella","07/03/26",941.53,"180.21k",0,"",0,""],["7689520679602982157","Umbrella + Stand","09/25/26",912.0,"17.43k",912.0,"17.43k",0,""],["7664674784642403615","Car Cooling Umbrella","07/20/26",884.44,"68.21k",195.0,"7.43k",0,""],["7688420863003217183","Umbrella + Stand","09/22/26",864.0,"19.42k",384.0,"7.71k",0,""],["7657644091232079134","Car Cooling Umbrella","07/01/26",850.23,"60.34k",156.0,"6.6k",0,""],["7681807731493211422","Offset Cross-Base","09/04/26",809.91,"46.94k",0,"",0,""],["7682922989872008479","Offset Cross-Base","09/07/26",795.75,"26.78k",0,"",0,""],["7681098462795959566","Offset Cross-Base","09/03/26",712.84,"37.35k",0,"",0,""],["7687710189692177695","Green Auto Umbrella","09/20/26",644.0,"38.9k",546.0,"32.85k",0,""],["7679816740934585630","Green Auto Umbrella","08/30/26",567.2,"29.21k",0,"",0,""],["7677050278746606878","Offset Cross-Base","08/22/26",539.94,"22.12k",0,"",0,""],["7682401248103976223","Offset Cross-Base","09/06/26",532.86,"16.46k",0,"",0,""],["7685490782999940366","Pocket Travel Umbrella","09/14/26",521.36,"1.14k",0,"",0,""],["7680830705911254302","Offset Cross-Base","09/02/26",449.95,"15.82k",0,"",0,""],["7686807692521917710","Summervibes 15FT","09/18/26",398.58,"3.18k",0,"",0,""],["7674889022166076685","PHIVILLA 15FT","08/17/26",387.99,"18.7k",0,"",0,""],["7690042260293012749","10-Rib Auto Umbrella","09/26/26",360.0,"1.24k",360.0,"1.24k",0,""],["7689144733997878541","10-Rib Auto Umbrella","09/24/26",336.0,"1.76k",336.0,"1.76k",0,""],["7683553770092924174","Pocket Travel Umbrella","09/09/26",297.36,"612",0,"",0,""],["7656967241623162125","PHIVILLA 15FT","06/29/26",295.98,"12.18k",0,"",0,""],["7681041314841939213","PHIVILLA 15FT","09/02/26",295.98,"5.35k",0,"",0,""],["7682207094656797966","PHIVILLA 15FT","09/05/26",289.98,"5.29k",0,"",0,""],["7684044474388942093","10-Rib Auto Umbrella","09/10/26",239.86,"2.37k",0,"",0,""],["7690043705494932750","10-Rib Auto Umbrella","09/26/26",180.0,"521",180.0,"521",0,""],["7689162511454653727","10-Rib Auto Umbrella","09/24/26",180.0,"823",168.0,"785",0,""],["7685117892802710797","10-Rib Auto Umbrella","09/13/26",166.8,"564",0,"",0,""],["7690311133219081503","10-Rib Auto Umbrella","09/27/26",156.0,"526",156.0,"526",0,""],["7690336622012812557","10-Rib Auto Umbrella","09/27/26",156.0,"535",156.0,"535",0,""],["7662365463061466382","PHIVILLA 15FT","07/14/26",139.99,"14.01k",0,"",0,""],["7608170086515445006","PHIVILLA 15FT","02/18/26",139.99,"17.99k",0,"",0,""],["7684521722489376014","Pocket Travel Umbrella","09/12/26",132.16,"280",0,"",0,""],["7688841285263740191","10-Rib Auto Umbrella","09/23/26",132.0,"516",0,"",0,""],["7687276280424795423","10-Rib Auto Umbrella","09/19/26",120.0,"581",0,"",0,""]];
+const IG = window.__IG = [{"code":"DV0nqxLjHqb","url":"https://www.instagram.com/reel/DV0nqxLjHqb/","handle":"varietyadda_nikol","likes":"35.3K","comments":"1.1K","date":"03/13/26","views":"2.7M","caption":"આવી ગરમીમાં સ્કૂટર ચલાવતા તડકો સીધો માથા પર પડે છે 🥵\nતો હવે લઇ આવો Bike / Scooty Canopy Umbrella ☂️\nગરમી, વરસાદ અને ઠંડી – ત્રણેય સીઝનમાં કામ લાગશે.\n\n👉 આજે જ લઇ જાઓ Variety Adda પરથી.\n\nOrder only on WhatsApp 📲\n9558938198\nNo Calls 🚫\n\n📍 Variety Adda\nRudraksh Appartment, Shop no. 3 to 6,\nB/ W. Dmart to Shelby Hospital Road,\nNikol, New Naroda, Ahmedabad\n\n#canopy #umbrella #summer #gujarat #ahmedabad","image":"/top-umbrella-dashboard/instagram-assets/DV0nqxLjHqb.jpg"},{"code":"DV5MwkgiZ_A","url":"https://www.instagram.com/reel/DV5MwkgiZ_A/","handle":"karishmadhillon__27","likes":"29.6K","comments":"4.1K","date":"03/14/26","views":"1.1M","caption":"Sundar hena ?? \n\n#umbrella #reelitfeelit #reelkarofeelkaro #trending #viralreels nanital nanital","image":"/top-umbrella-dashboard/instagram-assets/DV5MwkgiZ_A.jpg"},{"code":"DUuU8DlArmK","url":"https://www.instagram.com/reel/DUuU8DlArmK/","handle":"zontik_optom1","likes":"27.2K","comments":"2.4K","date":"02/13/26","views":"2M","caption":"💎 Yuqori sifatli soyabonlar\nUzoq xizmat qilish kafolati bilan har xil dizayn va rangdagi soyabonlar❗️\n\n📍 Abu Saxiy bozori, 3-blok, 10-ryad, 12-magazin.\n📲 Buyurtma uchun telefon: +998978706767\n#zontik #umbrella #abusaxiy #toshkent #orikzor","image":"/top-umbrella-dashboard/instagram-assets/DUuU8DlArmK.jpg"},{"code":"DV_H4IaEaKG","url":"https://www.instagram.com/reel/DV_H4IaEaKG/","handle":"justshine.12","likes":"26.1K","comments":"15.3K","date":"03/17/26","views":"2.1M","caption":"Comment for links☔️🔗\n\n#reel #flipkartfinds #umbrella #monsoon #useful","image":"/top-umbrella-dashboard/instagram-assets/DV_H4IaEaKG.jpg"},{"code":"DWOy-BpAqQq","url":"https://www.instagram.com/reel/DWOy-BpAqQq/","handle":"zontik_optom1","likes":"24K","comments":"2.6K","date":"03/23/26","views":"1.7M","caption":"☔️ Har qanday ob-havo uchun soyabonlar\nHar qanday ob-havoda foydalanish uchun qulay va mustahkam soyabonlar faqat bizda❗️\n\n🌈 Abu Saxiy bozoridagi Zontik Optom do’koniga tashrif buyuring: 3-blok, 10-ryad, 12-magazin.\n📞 Telefon: +998978706767#zontik #soyabon #abusaxiy #umbrella","image":"/top-umbrella-dashboard/instagram-assets/DWOy-BpAqQq.jpg"},{"code":"DXpEGMoE1XL","url":"https://www.instagram.com/reel/DXpEGMoE1XL/","handle":"riza.bagzone","likes":"12.5K","comments":"112","date":"04/27/26","views":"193K","caption":"🔥 Best Deal on DMK Umbrella ☂️\n\nPremium Quality at Wholesale Price 💯\n\n📦 Bulk Orders Accepted🛍 Single Piece Also Available\n\n⚡ Grab Yours Today!\n\n📲 WhatsApp: 7708162549🏪 Riza Bag Zone\n\n#dmk #dmkyouthwing #dmkitwing #umbrella #trending","image":"/top-umbrella-dashboard/instagram-assets/DXpEGMoE1XL.jpg"},{"code":"DXFsrFBzdmc","url":"https://www.instagram.com/reel/DXFsrFBzdmc/","handle":"figurasdbzchile","likes":"11.2K","comments":"627","date":"04/13/26","views":"214K","caption":"🙌🏻DISPONIBLE POR DM Y LOCAL🙌🏻\n🔥Con clientes que tienen hace AÑOS el suyo comprado en mi tienda, le recomiendo invertir una sola vez pero llevarse un paraguas HERMOSO de calidad 🌟👌🏻\n\n¡Hacemos envíos a todo Chile! ✈️🇨🇱\n\nVisítanos en: \n📍Paseo San Agustín, local 73, Santiago Centro, Chile. \n(Entrada por calle Moneda 835)\n\n¿Necesitas más información? \n¡Visita nuestro sitio web! 📲WWW.FIGURASDBZCHILE.CL\n\n¡Estamos cerca! \n🚇 Metros cercanos: Universidad de Chile y Santa Lucía.\n\n¡Te espero! ✨\n\n#chile #onepiece #paraguas #anime #umbrella","image":"/top-umbrella-dashboard/instagram-assets/DXFsrFBzdmc.jpg"},{"code":"DU24QtlDF6J","url":"https://www.instagram.com/reel/DU24QtlDF6J/","handle":"baroda_variety_shop","likes":"10.7K","comments":"121","date":"02/17/26","views":"1.9M","caption":"ફોલ્ડેબલ અને લાઇટવેઈટ ડિઝાઇન \n\nવડોદરા ની No.1 વેરાયટી નું કલેક્શન જોવા માટે ફોલો કરો ❤️\n\nBook now your Oder :- 6353299100\n\nઅમારી બીજી કોઈ બ્રાન્ચ નથી 🙏\n\nએડ્રેસ:-બી-25,બ્લુ ડાયમંડ કોમ્પ્લેક્સ,ફતેગંજ પેટ્રોલ પંપ,ફતેગંજ વડોદરા\n\n#cars #vadodara #umbrella #viralreel #baroda","image":"/top-umbrella-dashboard/instagram-assets/DU24QtlDF6J.jpg"},{"code":"DU4NrmRjTbO","url":"https://www.instagram.com/reel/DU4NrmRjTbO/","handle":"casamiakor.cr","likes":"10K","comments":"80","date":"02/17/26","views":"147K","caption":"#sombrillas #umbrella #paraguas #japonés \n📍Estamos ubicados en Heredia centro de la esquina de la pops que queda por el parque central 125mts al sur entre la óptica y coocique. Nuestro toldo es celeste y blanco♡","image":"/top-umbrella-dashboard/instagram-assets/DU4NrmRjTbO.jpg"},{"code":"DXxYln_Pu5F","url":"https://www.instagram.com/reel/DXxYln_Pu5F/","handle":"charlotte.inspira","likes":"10K","comments":"358","date":"04/30/26","views":"519K","caption":"Pourquoi je n’y ai pas pensé avant? 😆☔️👀 \n\nTu en penses quoi? 🫱🏻‍🫲🏼⤵️ #runningmama #run #umbrella","image":"/top-umbrella-dashboard/instagram-assets/DXxYln_Pu5F.jpg"}];
+window.__IG_UPDATED = "2026-10-02";
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const fmt = r => r >= 1000 ? '$' + (r/1000).toFixed(2).replace(/\.?0+$/,'') + 'k' : '$' + r.toFixed(0);
+const meta = {};
+function setRange(n){
+  document.querySelectorAll('.toggle button').forEach(b=>b.classList.remove('on'));
+  document.getElementById(n===1?'b1':n===7?'b7':'b30').classList.add('on');
+  const o = n===1 ? 7 : n===7 ? 5 : 3;
+  const list = D.filter(v=>v[o]>100).sort((a,b)=>b[o]-a[o]);
+  document.getElementById('count').textContent = list.length + ' videos';
+  document.getElementById('foot').textContent = 'Source: Kalodata · TikTok Shop US · Tap a video to watch on TikTok · Revenue/views are per selected window';
+  document.getElementById('grid').innerHTML = list.length ? list.map((v,i)=>`
+    <a class="card" id="c_${v[0]}" href="https://www.tiktok.com/player/v1/${v[0]}" target="_blank">
+      <div class="thumb"><span class="ph">▶</span><span class="rank">#${i+1}</span><span class="ptag">${v[1]}</span></div>
+      <div class="cardbody">
+        <div class="nums"><span class="rev">${fmt(v[o])}</span><span class="views">${v[o+1]}${v[o+1]?' views':''}</span></div>
+        <div class="who" id="w_${v[0]}">${v[2]}</div>
+      </div>
+    </a>`).join('') : '<div class="empty">No videos over $100 revenue in this window.</div>';
+  list.forEach(v=>hydrate(v[0], v[2]));
+}
+function applyMeta(id, pub){
+  const m = meta[id]; if(!m) return;
+  const card = document.getElementById('c_'+id);
+  if(!card) return;
+  if(m.url) card.href = m.url;
+  const th = card.querySelector('.thumb');
+  if(m.thumb && !th.querySelector('img')){ const img=new Image(); img.onload=()=>th.prepend(img); img.src=m.thumb; }
+  if(m.handle) document.getElementById('w_'+id).textContent = m.handle + ' · ' + pub;
+}
+function hydrate(id, pub){
+  if(meta[id]){ applyMeta(id, pub); return; }
+  fetch('https://www.tiktok.com/oembed?url=' + encodeURIComponent('https://www.tiktok.com/@i/video/' + id))
+    .then(r=>r.json())
+    .then(j=>{
+      const handle = (j.author_url||'').split('/@')[1] ? '@'+j.author_url.split('/@')[1] : '';
+      meta[id] = {thumb: j.thumbnail_url||'', handle, url: j.author_url ? j.author_url + '/video/' + id : ''};
+      applyMeta(id, pub);
+    }).catch(()=>{ meta[id] = {}; });
+}
+function setInstagram(){
+  document.querySelectorAll('.toggle button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('big').classList.add('on');
+  document.getElementById('count').textContent = IG.length + ' posts';
+  document.getElementById('foot').textContent = 'Source: Instagram public “Umbrella” topic results · Product-relevant posts only · Ranked by displayed likes · Views and comments shown when public';
+  document.getElementById('grid').innerHTML = IG.map((p,i)=>`
+    <a class="card ig-card" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer" aria-label="Rank ${i+1}, @${esc(p.handle)}, ${esc(p.likes)} likes">
+      <div class="thumb"><img src="${esc(p.image)}" alt="Thumbnail for @${esc(p.handle)} Instagram Reel" loading="${i<4?'eager':'lazy'}"><span class="rank">#${i+1}</span><span class="ptag">Instagram · @${esc(p.handle)}</span></div>
+      <div class="cardbody">
+        <div class="nums"><span class="rev">♥ ${esc(p.likes)}</span><span class="views">${esc(p.views)}${p.views?' views':''}</span></div>
+        <div class="who">@${esc(p.handle)} · ${esc(p.date)}</div>
+      </div>
+    </a>`).join('');
+}
+window.setInstagram = setInstagram;
+setRange(30);
+const mBtn = document.getElementById('mode');
+function applyMode(m){
+  document.documentElement.dataset.theme = m;
+  mBtn.textContent = m === 'dark' ? '☀️' : '🌙';
+  try{ localStorage.setItem('kalo-theme', m); }catch(e){}
+}
+mBtn.onclick = () => applyMode(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+let saved = 'light'; try{ saved = localStorage.getItem('kalo-theme') || 'light'; }catch(e){}
+applyMode(saved);
+</script>
+<script>(function(){
+window.__RISING_SINCE = "2026-09-25";
+window.__PREV_RISING = ["7687228293581442317", "7686807692521917710", "7686120483720269086", "7688293283449146655"];
+function pd(s){var p=s.split("/");return new Date(2000+ +p[2], +p[0]-1, +p[1]);}
+function fmt(n){if(n<1000)return ""+n;var s=(n/1000).toFixed(2);while(s.indexOf(".")>-1&&(s.charAt(s.length-1)==="0"||s.charAt(s.length-1)==="."))s=s.slice(0,-1);return s+"k";}
+var bar=document.querySelector(".toggle");
+var rb=document.createElement("button"); rb.id="risingBtn"; rb.textContent="Rising";
+rb.onclick=function(){window.setRange("rising");};
+if(bar) bar.appendChild(rb);
+var _orig=window.setRange;
+window.setRange=function(x){ if(x==="rising"){ if(bar) bar.querySelectorAll("button").forEach(function(b){b.classList.remove("on");}); rb.classList.add("on"); return showRising(); } rb.classList.remove("on"); return _orig(x); };
+function showRising(){
+var sc=new Date(window.__RISING_SINCE+"T00:00:00"); var prev=window.__PREV_RISING||[];
+var list=(window.__D||[]).filter(function(v){return v[3]>100 && pd(v[2])>=sc;});
+list.sort(function(a,b){return pd(b[2])-pd(a[2]) || b[3]-a[3];});
+document.getElementById("count").textContent=list.length+" rising";
+document.getElementById("foot").textContent="Source: Kalodata · TikTok Shop US · Tap a video to watch on TikTok · Revenue/views are per selected window";
+document.getElementById("grid").innerHTML = list.length ? list.map(function(v){
+var pin = prev.indexOf(v[0])===-1;
+var h="<a class=\"card\" id=\"c_"+v[0]+"\" href=\"https://www.tiktok.com/player/v1/"+v[0]+"\" target=\"_blank\">";
+h+="<div class=\"thumb\"><span class=\"ph\">\u25B6</span>"+(pin?"<span class=\"rank\">\uD83D\uDCCC</span>":"")+"<span class=\"ptag\">"+v[1]+"</span></div>";
+h+="<div class=\"cardbody\"><div class=\"nums\"><span class=\"rev\">$"+fmt(v[3])+"</span><span class=\"views\">"+v[4]+" views</span></div>";
+h+="<div class=\"who\" id=\"w_"+v[0]+"\">"+v[2]+"</div></div></a>";
+return h;
+}).join("") : "<div class=\"empty\">No rising videos in the last 7 days.</div>";
+if(window.hydrate) list.forEach(function(v){window.hydrate(v[0], v[2]);});
+}
+window.showRising=showRising;
+})();</script>
+</body>
+</html>
