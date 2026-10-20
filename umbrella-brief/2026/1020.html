@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Umbrella Content</title>
+<style>
+  :root{
+    --teal:#0e7c7b; --bg:#f7f9fa; --card:#ffffff; --text:#25333f; --muted:#7a8a96;
+    --line:#e5ebee; --heading:#17324d;
+  }
+  html[data-theme="dark"]{
+    --teal:#45c9c6; --bg:#0f1620; --card:#1a2330; --text:#e8eef4; --muted:#9fb0be;
+    --line:#2a3545; --heading:#f2f6fa;
+  }
+  #mode{position:fixed;top:12px;right:12px;z-index:50;width:34px;height:34px;border-radius:50%;
+    border:1px solid rgba(127,127,127,.4);background:var(--card);cursor:pointer;font-size:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);line-height:1}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+  .wrap{max-width:980px;margin:0 auto;padding:24px 20px 50px}
+  .kicker{text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--muted)}
+  .bar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  h1{font-size:26px;font-weight:800;color:var(--heading);margin-top:2px}
+  .subline{font-size:12px;color:var(--muted);margin-top:2px}
+  .spacer{flex:1}
+  .toggle{display:inline-flex;flex-wrap:wrap;max-width:100%;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+  .toggle button{border:0;background:transparent;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+  .toggle button.on{background:#0e7c7b;color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.bar{align-items:flex-start}.toggle{width:100%;justify-content:center;border-radius:14px}.toggle button{padding:6px 10px;font-size:12px;flex:1 1 auto}}
+  @media(max-width:420px){.grid{grid-template-columns:1fr}}
+  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--text);transition:transform .12s}
+  a.card:hover{transform:translateY(-2px)}
+  .thumb{position:relative;aspect-ratio:3/4;background:linear-gradient(135deg,#17324d,#0e7c7b);display:flex;align-items:center;justify-content:center}
+  .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .thumb .ph{color:#fff;opacity:.5;font-size:30px}
+  .thumb .rank{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px;z-index:2}
+  .thumb .ptag{position:absolute;bottom:8px;left:8px;right:8px;background:rgba(0,0,0,.55);color:#fff;font-size:10px;font-weight:600;border-radius:6px;padding:2px 7px;z-index:2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cardbody{padding:8px 10px}
+  .nums{display:flex;justify-content:space-between;align-items:baseline}
+  .rev{font-size:15px;font-weight:800;color:var(--teal)}
+  .views{font-size:12px;color:var(--muted)}
+  .who{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);font-size:13px;padding:30px 0}
+  .foot{font-size:11px;color:var(--muted);margin-top:14px}
+  .ig-card .rev{color:#d62976}
+  .ig-card .thumb{overflow:hidden}
+  .ig-card .thumb img{display:block}
+
+</style>
+</head>
+<body>
+<button id="mode" title="Toggle light/dark mode">🌙</button>
+<div class="wrap">
+  <div class="bar">
+    <div>
+      <div class="kicker">Kalo Data Brief · Updated October 20, 2026 · Data as of October 19, 2026</div>
+      <h1>Top Umbrella Content</h1>
+      <div class="subline">Top umbrella products from exact “umbrella” search · videos over $100 revenue · <span id="count"></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="toggle">
+      <button id="b1" onclick="setRange(1)">Yesterday</button>
+      <button id="b7" onclick="setRange(7)">7 Days</button>
+      <button id="b30" class="on" onclick="setRange(30)">30 Days</button>
+      <button id="big" onclick="setInstagram()">Instagram</button>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="foot" id="foot">Source: Kalodata · TikTok Shop US · Tap a video to watch on TikTok · Revenue/views are per selected window</div>
+</div>
+
+<script>
+const D = window.__D = [["7672502754870414606","Ring Handle Auto","08/10/26",27500.0,"2.41m",2040.0,"259.15k",156.0,"15.73k"],["7693199181250350367","Loop Buckle Auto","10/05/26",20470.0,"2.16m",3680.0,"371.54k",243.0,"20.36k"],["7690586787109965070","Loop Buckle Auto","09/28/26",18500.0,"2.02m",4420.0,"453.07k",0,""],["7674394800770092319","Loop Buckle Auto","08/15/26",18310.0,"2.46m",2340.0,"280.49k",0,""],["7683577311911824654","Loop Buckle Auto","09/09/26",14770.0,"2.72m",1120.0,"104.82k",189.0,"15.77k"],["7679084369348152589","Loop Buckle Auto","08/28/26",13480.0,"2.53m",0,"",0,""],["7663493420534598925","Loop Buckle Auto","07/17/26",12090.0,"1.75m",486.0,"51.12k",0,""],["7674418581265763615","Loop Buckle Auto","08/15/26",12060.0,"1.78m",702.0,"67.76k",0,""],["7691833114657705230","Loop Buckle Auto","10/01/26",10910.0,"1.22m",1400.0,"136.63k",117.0,"9.89k"],["7678354759975259422","Loop Buckle Auto","08/26/26",10730.0,"1.12m",7760.0,"794.68k",1250.0,"104.25k"],["7685208742442388750","Loop Buckle Auto","09/13/26",9570.0,"1.59m",684.0,"68.64k",0,""],["7671387017699167519","Outvita Picnic Table","08/07/26",8730.0,"383.56k",649.0,"13.14k",118.0,"3.26k"],["7693247227673759007","Outvita Picnic Table","10/05/26",6610.0,"282.08k",944.0,"18.12k",118.0,"2.92k"],["7670693266576215326","Foldable Car Sunshade","08/05/26",6340.0,"548.21k",715.0,"7.99k",0,""],["7654473213136686349","15FT Patio","06/23/26",5590.0,"42.73k",849.04,"6.38k",0,""],["7687766895591738655","Outvita Picnic Table","09/20/26",4720.0,"204.42k",295.0,"3.38k",0,""],["7636983091004853534","OOSWIFT Solar Patio","05/07/26",4410.0,"19.54k",652.0,"3.62k",0,""],["7687228293581442317","Ring Handle Auto","09/19/26",4290.0,"371.92k",208.0,"24.89k",0,""],["7652202392020126989","15FT Patio","06/16/26",4070.0000000000005,"29.09k",1100.0,"6.53k",0,""],["7651722445107252510","Car Cooling Umbrella","06/15/26",3800.0,"740.01k",480.0,"95.04k",0,""],["7654142617210408205","15FT Patio","06/22/26",2900.0,"23.23k",676.16,"5.06k",0,""],["7675753230768377101","Ring Handle Auto","08/19/26",2650.0,"351.12k",819.0,"92.93k",234.0,"24.09k"],["7647421237957758239","Portable Base Stand","06/04/26",2350.0,"49.58k",0,"",0,""],["7668094171487472909","Ring Handle Auto","07/29/26",2150.0,"216.26k",637.0,"74.98k",0,""],["7665070724096314654","Portable Base Stand","07/21/26",2110.0,"44.08k",0,"",0,""],["7655796695812377886","Foldable Car Sunshade","06/26/26",2090.0,"59.54k",793.0,"9.29k",0,""],["7647731724620811550","OOSWIFT Solar Patio","06/04/26",2040.0,"11.42k",334.0,"2.9k",0,""],["7647406158415793438","Portable Base Stand","06/04/26",1680.0,"32.1k",0,"",0,""],["7680540180461243678","Ring Handle Auto","09/01/26",1630.0,"177.72k",0,"",0,""],["7641779783948389662","Portable Base Stand","05/19/26",1580.0,"102.63k",0,"",0,""],["7691710106798411022","Ring Handle Auto","10/01/26",1390.0,"500.25k",247.0,"30.36k",0,""],["7690325476866411789","Portable Base Stand","09/27/26",1340.0,"53.4k",0,"",0,""],["7691641497690656014","Umbrella Humidifier","10/01/26",1340.0,"4.86k",0,"",0,""],["7694015796544064782","10Bones Auto","10/07/26",1310.0,"5.44k",0,"",0,""],["7659566008113417486","Car Cooling Umbrella","07/06/26",1200.0,"235.77k",400.0,"74.36k",0,""],["7688293283449146655","Portable Base Stand","09/22/26",1200.0,"32.5k",0,"",0,""],["7651031422198664478","Car Cooling Umbrella","06/13/26",1170.0,"237.27k",184.0,"40.09k",0,""],["7658022787566538015","Car Cooling Umbrella","07/02/26",1140.0,"225.05k",224.0,"44.38k",0,""],["7656763475858853151","Outvita Picnic Table","06/29/26",1120.0,"44.28k",177.0,"2.95k",0,""],["7691140165938564365","10Bones Auto","09/29/26",1120.0,"3.5k",0,"",0,""],["7688047097605655821","Ring Handle Auto","09/21/26",1060.0,"77.62k",0,"",0,""],["7687710189692177695","Ring Handle Auto","09/20/26",944.0,"67.98k",0,"",0,""],["7652101003919035678","Car Cooling Umbrella","06/16/26",920.0,"193.03k",136.0,"25.08k",0,""],["7689520679602982157","Portable Base Stand","09/25/26",912.0,"17.5k",0,"",0,""],["7655005408557419807","Car Cooling Umbrella","06/24/26",904.0,"213.83k",120.0,"20.38k",0,""],["7688420863003217183","Portable Base Stand","09/22/26",864.0,"19.44k",0,"",0,""],["7681880125847211278","Car Cooling Umbrella","09/04/26",832.0,"164.3k",256.0,"49.8k",0,""],["7658057945174854942","Car Cooling Umbrella","07/02/26",824.0,"159.69k",0,"",0,""],["7656231007896554766","Foldable Car Sunshade","06/27/26",780.0,"27.33k",208.0,"2.97k",0,""],["7664674784642403615","Foldable Car Sunshade","07/20/26",780.0,"37.94k",143.0,"1.83k",0,""],["7651695148589419807","Car Cooling Umbrella","06/15/26",776.0,"156.81k",0,"",0,""],["7690544749551439134","Umbrella Humidifier","09/28/26",732.15,"15.86k",0,"",0,""],["7657870982580931853","15FT Patio","07/02/26",713.28,"6.73k",0,"",0,""],["7650659461341678879","Car Cooling Umbrella","06/12/26",704.0,"143.34k",112.0,"20.49k",0,""],["7691276063628037407","Umbrella Humidifier","09/30/26",651.45,"42.05k",0,"",0,""],["7669823054800850190","Ring Handle Auto","08/03/26",644.0,"68.73k",117.0,"12.39k",0,""],["7669989197737987359","Foldable Car Sunshade","08/03/26",624.0,"29.33k",117.0,"1.27k",0,""],["7654690079834672414","Portable Base Stand","06/23/26",624.0,"9.69k",0,"",0,""],["7692195849719401758","10Bones Auto","10/02/26",612.0,"1.99k",0,"",0,""],["7690256664926227725","Portable Base Stand","09/27/26",579.0,"17.4k",0,"",0,""],["7690042260293012749","10Bones Auto","09/26/26",576.0,"1.9k",0,"",0,""],["7654677160866762015","Foldable Car Sunshade","06/23/26",572.0,"22.27k",156.0,"1.61k",0,""],["7657644091232079134","Foldable Car Sunshade","07/01/26",559.0,"24.68k",143.0,"1.63k",0,""],["7689144733997878541","10Bones Auto","09/24/26",528.0,"2.38k",0,"",0,""],["7694264387309292814","10Bones Auto","10/08/26",516.0,"1.86k",0,"",0,""],["7667025730479377694","Foldable Car Sunshade","07/26/26",494.0,"36.55k",0,"",0,""],["7693200132732390670","Ring Handle Auto","10/05/26",485.0,"100.03k",0,"",0,""],["7690876224675007758","Umbrella Humidifier","09/29/26",459.66,"1.7k",0,"",0,""],["7655025651518328094","Foldable Car Sunshade","06/24/26",455.0,"17.93k",156.0,"1.97k",0,""],["7697734942503095582","10Bones Auto","10/17/26",352.0,"4.03k",352.0,"4.03k",0,""],["7662433580827593997","Foldable Car Sunshade","07/14/26",299.0,"11.94k",0,"",0,""],["7692192159646174494","10Bones Auto","10/02/26",272.0,"862",0,"",0,""],["7691425402459393311","10Bones Auto","09/30/26",264.0,"911",0,"",0,""],["7651935739038502158","15FT Patio","06/16/26",251.76,"2.51k",0,"",0,""],["7690529348935290126","Umbrella Humidifier","09/28/26",248.86,"2.77k",0,"",0,""],["7695234810586860813","10Bones Auto","10/10/26",248.0,"1.18k",0,"",0,""],["7686807692521917710","15FT Patio","09/18/26",188.82,"3.48k",0,"",0,""],["7688628613503028510","Outvita Picnic Table","09/23/26",177.0,"6.79k",0,"",0,""],["7696078276321660174","15FT Patio","10/13/26",167.76,"1k",167.76,"1k",0,""],["7696220328158039326","Outvita Picnic Table","10/13/26",118.0,"1.82k",118.0,"1.82k",0,""],["7694553236367248671","Outvita Picnic Table","10/09/26",118.0,"3.45k",0,"",0,""],["7693086685516533023","Outvita Picnic Table","10/05/26",118.0,"6.37k",0,"",0,""]];
+const IG = window.__IG = [{"code":"DV5MwkgiZ_A","url":"https://www.instagram.com/reel/DV5MwkgiZ_A/","handle":"karishmadhillon__27","likes":"29.6K","comments":"4,120","date":"03/14/26","views":"1.1M","caption":"Sundar hena ?? \n\n#umbrella #reelitfeelit #reelkarofeelkaro #trending #viralreels nanital nanital","image":"/top-umbrella-dashboard/instagram-assets/DV5MwkgiZ_A.jpg"},{"code":"DUuU8DlArmK","url":"https://www.instagram.com/reel/DUuU8DlArmK/","handle":"zontik_optom1","likes":"27.1K","comments":"2,440","date":"02/13/26","views":"2M","caption":"💎 Yuqori sifatli soyabonlar\nUzoq xizmat qilish kafolati bilan har xil dizayn va rangdagi soyabonlar❗️\n\n📍 Abu Saxiy bozori, 3-blok, 10-ryad, 12-magazin.\n📲 Buyurtma uchun telefon: +998978706767\n#zontik #umbrella #abusaxiy #toshkent #orikzor","image":"/top-umbrella-dashboard/instagram-assets/DUuU8DlArmK.jpg"},{"code":"DV_H4IaEaKG","url":"https://www.instagram.com/reel/DV_H4IaEaKG/","handle":"justshine.12","likes":"26K","comments":"15.2K","date":"03/17/26","views":"2.1M","caption":"Comment for links☔️🔗\n\n#reel #flipkartfinds #umbrella #monsoon #useful","image":"/top-umbrella-dashboard/instagram-assets/DV_H4IaEaKG.jpg"},{"code":"DWOy-BpAqQq","url":"https://www.instagram.com/reel/DWOy-BpAqQq/","handle":"zontik_optom1","likes":"24K","comments":"2,591","date":"03/23/26","views":"1.7M","caption":"☔️ Har qanday ob-havo uchun soyabonlar\nHar qanday ob-havoda foydalanish uchun qulay va mustahkam soyabonlar faqat bizda❗️\n\n🌈 Abu Saxiy bozoridagi Zontik Optom do’koniga tashrif buyuring: 3-blok, 10-ryad, 12-magazin.\n📞 Telefon: +998978706767#zontik #soyabon #abusaxiy #umbrella","image":"/top-umbrella-dashboard/instagram-assets/DWOy-BpAqQq.jpg"},{"code":"DXpEGMoE1XL","url":"https://www.instagram.com/reel/DXpEGMoE1XL/","handle":"riza.bagzone","likes":"12.5K","comments":"112","date":"04/27/26","views":"193K","caption":"🔥 Best Deal on DMK Umbrella ☂️\n\nPremium Quality at Wholesale Price 💯\n\n📦 Bulk Orders Accepted🛍 Single Piece Also Available\n\n⚡ Grab Yours Today!\n\n📲 WhatsApp: 7708162549🏪 Riza Bag Zone\n\n#dmk #dmkyouthwing #dmkitwing #umbrella #trending","image":"/top-umbrella-dashboard/instagram-assets/DXpEGMoE1XL.jpg"},{"code":"DXFsrFBzdmc","url":"https://www.instagram.com/reel/DXFsrFBzdmc/","handle":"figurasdbzchile","likes":"11.2K","comments":"627","date":"04/13/26","views":"214K","caption":"🙌🏻DISPONIBLE POR DM Y LOCAL🙌🏻\n🔥Con clientes que tienen hace AÑOS el suyo comprado en mi tienda, le recomiendo invertir una sola vez pero llevarse un paraguas HERMOSO de calidad 🌟👌🏻\n\n¡Hacemos envíos a todo Chile! ✈️🇨🇱\n\nVisítanos en: \n📍Paseo San Agustín, local 73, Santiago Centro, Chile. \n(Entrada por calle Moneda 835)\n\n¿Necesitas más información? \n¡Visita nuestro sitio web! 📲WWW.FIGURASDBZCHILE.CL\n\n¡Estamos cerca! \n🚇 Metros cercanos: Universidad de Chile y Santa Lucía.\n\n¡Te espero! ✨\n\n#chile #onepiece #paraguas #anime #umbrella","image":"/top-umbrella-dashboard/instagram-assets/DXFsrFBzdmc.jpg"},{"code":"DU24QtlDF6J","url":"https://www.instagram.com/reel/DU24QtlDF6J/","handle":"baroda_variety_shop","likes":"10.7K","comments":"121","date":"02/17/26","views":"1.9M","caption":"ફોલ્ડેબલ અને લાઇટવેઈટ ડિઝાઇન \n\nવડોદરા ની No.1 વેરાયટી નું કલેક્શન જોવા માટે ફોલો કરો ❤️\n\nBook now your Oder :- 6353299100\n\nઅમારી બીજી કોઈ બ્રાન્ચ નથી 🙏\n\nએડ્રેસ:-બી-25,બ્લુ ડાયમંડ કોમ્પ્લેક્સ,ફતેગંજ પેટ્રોલ પંપ,ફતેગંજ વડોદરા\n\n#cars #vadodara #umbrella #viralreel #baroda","image":"/top-umbrella-dashboard/instagram-assets/DU24QtlDF6J.jpg"},{"code":"DU4NrmRjTbO","url":"https://www.instagram.com/reel/DU4NrmRjTbO/","handle":"casamiakor.cr","likes":"10.1K","comments":"82","date":"02/17/26","views":"147K","caption":"#sombrillas #umbrella #paraguas #japonés \n📍Estamos ubicados en Heredia centro de la esquina de la pops que queda por el parque central 125mts al sur entre la óptica y coocique. Nuestro toldo es celeste y blanco♡","image":"/top-umbrella-dashboard/instagram-assets/DU4NrmRjTbO.jpg"},{"code":"DXxYln_Pu5F","url":"https://www.instagram.com/reel/DXxYln_Pu5F/","handle":"charlotte.inspira","likes":"9,990","comments":"358","date":"04/30/26","views":"519K","caption":"Pourquoi je n’y ai pas pensé avant? 😆☔️👀 \n\nTu en penses quoi? 🫱🏻‍🫲🏼⤵️ #runningmama #run #umbrella","image":"/top-umbrella-dashboard/instagram-assets/DXxYln_Pu5F.jpg"},{"code":"DXjm3J2iTz-","url":"https://www.instagram.com/reel/DXjm3J2iTz-/","handle":"campydingle","likes":"9,239","comments":"3,589","date":"04/25/26","views":"387K","caption":"Foldable Umbrella for your permanent Campsite & Resorts\n.\n.\n#campinggear #campydingle #outdoorashobby #umbrella #foldingshelter","image":"/top-umbrella-dashboard/instagram-assets/DXjm3J2iTz-.jpg"}];
+window.__IG_UPDATED = "2026-10-20";
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const fmt = r => r >= 1000 ? '$' + (r/1000).toFixed(2).replace(/\.?0+$/,'') + 'k' : '$' + r.toFixed(0);
+const meta = {};
+function setRange(n){
+  document.querySelectorAll('.toggle button').forEach(b=>b.classList.remove('on'));
+  document.getElementById(n===1?'b1':n===7?'b7':'b30').classList.add('on');
+  const o = n===1 ? 7 : n===7 ? 5 : 3;
+  const list = D.filter(v=>v[o]>100).sort((a,b)=>b[o]-a[o]);
+  document.getElementById('count').textContent = list.length + ' videos';
+  document.getElementById('foot').textContent = 'Source: Kalodata · TikTok Shop US · Tap a video to watch on TikTok · Revenue/views are per selected window';
+  document.getElementById('grid').innerHTML = list.length ? list.map((v,i)=>`
+    <a class="card" id="c_${v[0]}" href="https://www.tiktok.com/player/v1/${v[0]}" target="_blank">
+      <div class="thumb"><span class="ph">▶</span><span class="rank">#${i+1}</span><span class="ptag">${v[1]}</span></div>
+      <div class="cardbody">
+        <div class="nums"><span class="rev">${fmt(v[o])}</span><span class="views">${v[o+1]}${v[o+1]?' views':''}</span></div>
+        <div class="who" id="w_${v[0]}">${v[2]}</div>
+      </div>
+    </a>`).join('') : '<div class="empty">No videos over $100 revenue in this window.</div>';
+  list.forEach(v=>hydrate(v[0], v[2]));
+}
+function applyMeta(id, pub){
+  const m = meta[id]; if(!m) return;
+  const card = document.getElementById('c_'+id);
+  if(!card) return;
+  if(m.url) card.href = m.url;
+  const th = card.querySelector('.thumb');
+  if(m.thumb && !th.querySelector('img')){ const img=new Image(); img.onload=()=>th.prepend(img); img.src=m.thumb; }
+  if(m.handle) document.getElementById('w_'+id).textContent = m.handle + ' · ' + pub;
+}
+function hydrate(id, pub){
+  if(meta[id]){ applyMeta(id, pub); return; }
+  fetch('https://www.tiktok.com/oembed?url=' + encodeURIComponent('https://www.tiktok.com/@i/video/' + id))
+    .then(r=>r.json())
+    .then(j=>{
+      const handle = (j.author_url||'').split('/@')[1] ? '@'+j.author_url.split('/@')[1] : '';
+      meta[id] = {thumb: j.thumbnail_url||'', handle, url: j.author_url ? j.author_url + '/video/' + id : ''};
+      applyMeta(id, pub);
+    }).catch(()=>{ meta[id] = {}; });
+}
+function setInstagram(){
+  document.querySelectorAll('.toggle button').forEach(b=>b.classList.remove('on'));
+  document.getElementById('big').classList.add('on');
+  document.getElementById('count').textContent = IG.length + ' posts';
+  document.getElementById('foot').textContent = 'Source: Instagram public “Umbrella” topic results · Product-relevant posts only · Ranked by displayed likes · Views and comments shown when public';
+  document.getElementById('grid').innerHTML = IG.map((p,i)=>`
+    <a class="card ig-card" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer" aria-label="Rank ${i+1}, @${esc(p.handle)}, ${esc(p.likes)} likes">
+      <div class="thumb"><img src="${esc(p.image)}" alt="Thumbnail for @${esc(p.handle)} Instagram Reel" loading="${i<4?'eager':'lazy'}"><span class="rank">#${i+1}</span><span class="ptag">Instagram · @${esc(p.handle)}</span></div>
+      <div class="cardbody">
+        <div class="nums"><span class="rev">♥ ${esc(p.likes)}</span><span class="views">${esc(p.views)}${p.views?' views':''}</span></div>
+        <div class="who">@${esc(p.handle)} · ${esc(p.date)}</div>
+      </div>
+    </a>`).join('');
+}
+window.setInstagram = setInstagram;
+setRange(30);
+const mBtn = document.getElementById('mode');
+function applyMode(m){
+  document.documentElement.dataset.theme = m;
+  mBtn.textContent = m === 'dark' ? '☀️' : '🌙';
+  try{ localStorage.setItem('kalo-theme', m); }catch(e){}
+}
+mBtn.onclick = () => applyMode(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+let saved = 'light'; try{ saved = localStorage.getItem('kalo-theme') || 'light'; }catch(e){}
+applyMode(saved);
+</script>
+<script>(function(){
+window.__RISING_SINCE = "2026-10-13";
+window.__PREV_RISING = ["7690325476866411789", "7689520679602982157", "7690042260293012749", "7690043705494932750", "7690311133219081503", "7690336622012812557"];
+function pd(s){var p=s.split("/");return new Date(2000+ +p[2], +p[0]-1, +p[1]);}
+function fmt(n){if(n<1000)return ""+n;var s=(n/1000).toFixed(2);while(s.indexOf(".")>-1&&(s.charAt(s.length-1)==="0"||s.charAt(s.length-1)==="."))s=s.slice(0,-1);return s+"k";}
+var bar=document.querySelector(".toggle");
+var rb=document.createElement("button"); rb.id="risingBtn"; rb.textContent="Rising";
+rb.onclick=function(){window.setRange("rising");};
+if(bar) bar.appendChild(rb);
+var _orig=window.setRange;
+window.setRange=function(x){ if(x==="rising"){ if(bar) bar.querySelectorAll("button").forEach(function(b){b.classList.remove("on");}); rb.classList.add("on"); return showRising(); } rb.classList.remove("on"); return _orig(x); };
+function showRising(){
+var sc=new Date(window.__RISING_SINCE+"T00:00:00"); var prev=window.__PREV_RISING||[];
+var list=(window.__D||[]).filter(function(v){return v[3]>100 && pd(v[2])>=sc;});
+list.sort(function(a,b){return pd(b[2])-pd(a[2]) || b[3]-a[3];});
+document.getElementById("count").textContent=list.length+" rising";
+document.getElementById("foot").textContent="Source: Kalodata · TikTok Shop US · Tap a video to watch on TikTok · Revenue/views are per selected window";
+document.getElementById("grid").innerHTML = list.length ? list.map(function(v){
+var pin = prev.indexOf(v[0])===-1;
+var h="<a class=\"card\" id=\"c_"+v[0]+"\" href=\"https://www.tiktok.com/player/v1/"+v[0]+"\" target=\"_blank\">";
+h+="<div class=\"thumb\"><span class=\"ph\">\u25B6</span>"+(pin?"<span class=\"rank\">\uD83D\uDCCC</span>":"")+"<span class=\"ptag\">"+v[1]+"</span></div>";
+h+="<div class=\"cardbody\"><div class=\"nums\"><span class=\"rev\">$"+fmt(v[3])+"</span><span class=\"views\">"+v[4]+" views</span></div>";
+h+="<div class=\"who\" id=\"w_"+v[0]+"\">"+v[2]+"</div></div></a>";
+return h;
+}).join("") : "<div class=\"empty\">No rising videos in the last 7 days.</div>";
+if(window.hydrate) list.forEach(function(v){window.hydrate(v[0], v[2]);});
+}
+window.showRising=showRising;
+})();</script>
+</body>
+</html>
